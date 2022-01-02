@@ -1,14 +1,26 @@
 import React from 'react';
 import Board from './components/board.jsx';
+import Input from './components/input.jsx';
 import Rules from './components/rules.jsx';
 import Feedback from './components/feedback.jsx';
+import Options from './components/options.jsx';
+
+import './stylesheets/Board.css';
 
 const App = () => (
-  <div className='mastermind'>
+  <div className='App'>
     <h1>Mastermind</h1>
     <Rules />
-    <Board />
-    <Feedback />
+    <div className='board'>
+      <Board />
+      <Feedback />
+    </div>
+    <div className='input'>
+      <Input />
+    </div>
+    <div className='options'>
+      <Options />
+    </div>
   </div>
 );
 
