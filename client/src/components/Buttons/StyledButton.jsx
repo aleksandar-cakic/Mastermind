@@ -14,6 +14,10 @@ display: inline-block;
 font-size: 2rem;
 `;
 
-export const TestButton = ({ children, className }) => {
-  return <Button className={className}>{children}</Button>
+const StyledButton = ({ children, className, onClick }) => {
+  return (
+    <Button onClick={onClick} className={className}>{children}</Button>
+  )
 }
+
+export default StyledButton;

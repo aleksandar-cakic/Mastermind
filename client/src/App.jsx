@@ -7,21 +7,29 @@ import Options from './components/options.jsx';
 
 import './stylesheets/Board.css';
 
-const App = () => (
-  <div className='App'>
-    <h1>Mastermind</h1>
-    <Rules />
-    <div className='board'>
-      <Board />
-      <Feedback />
-    </div>
-    <div className='input'>
-      <Input />
-    </div>
-    <div className='options'>
-      <Options />
-    </div>
-  </div>
-);
+class App extends React.Component {
+
+  render() {
+    return (
+
+
+
+      <div className='App'>
+        <h1>Mastermind</h1>
+        <Rules />
+        <div className='board'>
+          <Board />
+          <Feedback />
+        </div>
+        <div className='input'>
+          <Input />
+        </div>
+        <div className='options'>
+          <Options />
+        </div>
+      </div>
+    )
+  }
+};
 
 export default App;

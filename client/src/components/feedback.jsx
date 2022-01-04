@@ -1,5 +1,5 @@
 import React from 'react';
-import { TestButton } from './Buttons/TestButton.jsx';
+import { StyledButton } from './Buttons/StyledButton.jsx';
 import '../stylesheets/Feedback.css';
 
 const Feedback = () => (

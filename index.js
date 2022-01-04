@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/api');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -20,15 +20,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
+app.use(express.static('client/dist'))
 app.use('/api', routes);
+
 app.use((err, req, res, next) => {
   console.log(err);
   next();
 })
-app.use((req, res, next) => {
-  res.send('Welcome to Mastermind');
-});
 
 app.listen(port, () => {
   console.log(`Port ${port} is on fire!!`);

@@ -1,9 +1,9 @@
 import React from 'react';
-import { TestButton } from './Buttons/TestButton.jsx';
+import { StyledButton } from './Buttons/StyledButton.jsx';
 
 const Options = () => (
   <div className='colors'>
-    <TestButton></TestButton>
+    {/* <TestButton></TestButton>
     <TestButton></TestButton>
     <TestButton></TestButton>
     <TestButton></TestButton>
@@ -12,7 +12,7 @@ const Options = () => (
     <TestButton></TestButton>
     <TestButton></TestButton>
     <TestButton>Guess</TestButton>
-    <TestButton>Reset</TestButton>
+    <TestButton>Reset</TestButton> */}
   </div>
 )
 
