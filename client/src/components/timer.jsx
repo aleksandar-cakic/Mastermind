@@ -1,10 +1,10 @@
 import React from "react";
 
 const Timer = ({updateScore}) => {
-  let [timer, setTimer] = React.useState(1);
+  let [timer, setTimer] = React.useState(1000);
 
   React.useEffect(() => {
-   timer > 0 && setTimeout(() => setTimer(timer - 1), 1000)}, [timer]);
+   timer > 0 && setTimeout(() => setTimer(timer - 1), 25)}, [timer]);
 
   React.useEffect(() => {
    if (timer === 0) {

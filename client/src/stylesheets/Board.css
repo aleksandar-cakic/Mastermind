@@ -1,9 +1,7 @@
 .board {
   border-style: solid;
-  display: flex;
 }
 
 .board-history {
-  flex-grow: 10;
 }
 

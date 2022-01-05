@@ -1,11 +1,30 @@
 import React from 'react';
-import Input from './input.jsx';
+import Row from './row.jsx'
+import RowCheck from './rowCheck.jsx'
+import Feedback from './feedback.jsx'
 
-const Board = () => (
-  <div className='board-history'>
-    <h2>Board Space</h2>
-    {/* <Input /> */}
+class Board extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+
+    }
+  }
+
+  render() {
+
+    let rows = [];
+    for (let i = 0; i < this.props.totalRows; i++) {
+      rows.push(<Row />)
+    }
+
+    return (
+  <div className='board'>
+    {rows}
   </div>
-)
+    )
+  }
+}
 
 export default Board;
