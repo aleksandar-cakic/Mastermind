@@ -62,8 +62,6 @@ class App extends React.Component {
   updateRowCount() {
     this.setState({
       totalRows: this.state.totalRows - 1
-    }, () => {
-      console.log(this.state.totalRows)
     })
   }
 
@@ -123,6 +121,8 @@ class App extends React.Component {
             _this.solutionRow = data.split('')
             _this.setState({
               solutionRow: _this.solutionRow
+            }, () => {
+              console.log(_this.solutionRow)
             })
           }
         })

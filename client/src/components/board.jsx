@@ -32,7 +32,6 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
     const newFormData = { ...addFormData };
     newFormData[fieldName] = { value: fieldValue, color: fieldColor };
 
-    console.log('newFormData', newFormData)
     setAddFormData(newFormData)
   };
 
