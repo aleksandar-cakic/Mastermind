@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 mongoose
-  .connect(process.env.DB, { useNewUrlParser: true })
+  .connect('mongodb://localhost/mastermind', { useNewUrlParser: true })
   .then(() => console.log('We are Mongoosing!'))
   .catch((err) => console.log(err));
 
