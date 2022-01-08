@@ -54,6 +54,8 @@ as feedback:
 • The player had guessed a correct number and its correct location
 • The player’s guess was incorrect    
 
+---
+
 # Setting up the Application
 
 For this project I will be using MERN stack. I've created the repo on Github and have initialized the package.json file in my project using `npm init`, followed by installing the required dependencies: 
@@ -128,6 +130,8 @@ app.listen(port, () => {
 ```
 Running the server and dabase through package.json script `npm run start-watch`
 
+---
+
 # API Routes
 
 Next step was creating the routes for the app. I used Express Router to create simple HTTP requests for the Random API and for adding the user data and solution data to the database. 
@@ -191,6 +195,8 @@ let data = response.data.solution.replace(/(\r\n|\n|\r)/gm, "");
             \\ _this.solution = [1,2,3,4]
 ```
 
+---
+
 # Database Choice 
 
 For my database choice, I was looking into what LinkedIn was using. Reading up on Espresso, I realized I won't be able to use it for this project so I settled for MongoDB through Mongoose. 
@@ -220,6 +226,8 @@ const User = mongoose.model('User', UserSchema);
 
 
 I connected to the database and used environmental variables to secure sensitive data and separate it from the application code. 
+
+---
 
 # Drawings
 
@@ -316,6 +324,8 @@ Once the game starts, a timer is shown along with the number of remaining guesse
 
 
 ![Screen Shot 2022-01-08 at 1 45 41 AM](https://user-images.githubusercontent.com/78227541/148636440-22338a7a-849f-45ba-b944-9dbb63b34de4.png)
+
+---
 
 # Details on App.jsx
 
@@ -438,6 +448,8 @@ This was because I had these two conditional statements combined using ```else i
   }
 ```
 
+---
+
 # Details on Board.jsx
 
 Board component is in charge of rendering the game board with the interactive input row, check button and table that stores the history of guesses. I have it set up so it receives the pegs and feedback arrays from App.jsx as empty initial state. Those are then updated on form change and on form submit, they are compared against the solution array received from the Random API call. 
@@ -543,6 +555,8 @@ Back in Board.jsx, each of the input elements has been converted into a radio bu
 
 This way when comparing the input to the solution and checking for the winning conditions, I am still comparing number values, while the front end is rendering the color value of the same element. 
 
+---
+
 # Details on Rules.jsx
 
 Rules component is rendering a Rules button which, once clicked, shows a list of rules for the game. I was thinking how I could have a couple of rule lines appear on homepage, however, it was too cluttering and I would need a lot of space to properly explain the rules. I decided to use a Rule button to show and hide the rules so the user can read them at their convenience. 
@@ -572,6 +586,9 @@ Also, I've added four difficulties (Easy, Normal, Hard and Unfair). Depending on
           : this.props.currentDiff === 'Unfair' ? <div>Don't think, just play.</div>
             : ''
 ```
+
+---
+
 # Details on Timer.jsx
 
 Timer component renders a countdown timer once the game starts. 
@@ -609,6 +626,8 @@ const Timer = ({ updateScore, currentDiff, gameOver }) => {
 }
 ```
 
+---
+
 # Details on Input.jsx
 
 Input component renders the colors from the color array (this.colors in App.jsx) by using the map method. 
@@ -634,6 +653,8 @@ The colors are displayed in-line and if the array is expanded with newer colors,
 ```javascript 
     this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown'];
 ```
+
+---
 
 # Favorite Code 
 
@@ -666,7 +687,9 @@ My favorite part of the project was working on the game logic and making the boa
       {gameOver ? <div className='restartGame' onClick={restartGame}>Play Again?</div> : null}
       <br></br>
 ```
-      
+
+---
+
 # Future Improvements List
 
 - Improve difficulty system by increasing the number of pegs a user has to guess
