@@ -35,55 +35,43 @@ class Rules extends React.Component {
     this.setState({
       showRules: this.state.showRules ? false : true,
     })
-    //if you have time, update the rules to reflect different difficulties
   }
 
   updateDifficulty(e, item) {
-    // duplicate vs no duplicate pegs
-    // timer reduced per progress
     this.setState({
       currentDiff: e.target.id
     })
-    // update current difficulty in bold
-    // update game difficulty with timer and with more pegs/options
-
-    //easy - no timer, no duplicates
-    // normal - timer at 60, duplicates
-    // hard - timer at 30, duplicates
-    // unfair - vreme krece od sesdeset i spusta se dva puta brze nego normalno, nakon svakog reda, smanjuje se za dve sekunde. nakon petog reda, otvara se drugi red boja. na deveti red, vreme se spusta na deset sekunde, rules ? Don't think, just play Good luck
   }
 
   render() {
     const rulesButton = this.state.showRules ? 'Show Rules' : 'Hide Rules';
-    const currentDifficulty = this.props.currentDiff === 'Easy' ? <h4>Timer at 90 sec, no duplicate pegs</h4>
-      : this.props.currentDiff === 'Normal' ? <h4>Timer at 60 sec, duplicate pegs</h4>
-        : this.props.currentDiff === 'Hard' ? <h4>Timer at 30 sec, duplicate pegs</h4>
-          : this.props.currentDiff === 'Unfair' ? <h4>Don't think, just play.</h4>
+    const currentDifficulty = this.props.currentDiff === 'Easy' ? <div>Timer at 90 sec with duplicate pegs</div>
+      : this.props.currentDiff === 'Normal' ? <div>Timer at 60 sec with unique pegs</div>
+        : this.props.currentDiff === 'Hard' ? <div>Timer at 30 sec with unique pegs</div>
+          : this.props.currentDiff === 'Unfair' ? <div>Don't think, just play.</div>
             : ''
 
     return (
       <div className='rules'>
-      {this.props.newGame ? null :
-      <div>
-        <StyledButton onClick={this.props.startNewGame}>Start Game</StyledButton>
-        <StyledButton onClick={this.showRules}>{rulesButton}</StyledButton>
-        {!this.state.showRules ? this.state.ruleInfo.map((rule, i) => (
-          <h3 key={i}>{rule}</h3>)) : ''}
-        <h2>Difficulty</h2>
-        <div className='difficulty'>
-          {this.state.difficulty.map((item, i) => (
-            <div onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
-            ))}
-        </div>
-        </div>
-          }
-
-        <h3>Current Difficulty: {this.props.currentDiff}</h3>
-        {currentDifficulty
-        }
-        <div className='score'>Won: {this.props.won} Lost: {this.props.lost}</div>
-        <div className='remainingGuesses'>{`${this.props.remainingGuesses} guesses remaining`}</div>
-        {this.props.newGame ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} currentDiff={this.props.currentDiff} /> : <div className='timer'></div>}
+        {this.props.newGame ? null :
+          <div>
+            <StyledButton onClick={this.props.startNewGame}>Start Game</StyledButton>
+            <StyledButton onClick={this.showRules}>{rulesButton}</StyledButton>
+            {!this.state.showRules ? this.state.ruleInfo.map((rule, i) => (
+              <h5 key={i}>{rule}</h5>)) : ''}
+            <div className='difficulty'>
+              {this.state.difficulty.map((item, i) => (
+                <div onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
+              ))}
+            </div>
+          </div>
+      }
+        <div className='currentDifficulty'>Current Difficulty: {this.props.currentDiff}</div>
+        {!this.props.newGame ? currentDifficulty : null}
+        {this.props.won === 1 ? <div className='score'>YOU WON!!!</div>
+          : this.props.lost === 1 ? <div className='score'>YOU LOST :((</div>
+            : null}
+        {this.props.newGame ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} currentDiff={this.props.currentDiff} gameOver={this.props.gameOver} /> : <div className='timer'></div>}
         <br></br>
       </div>
     )

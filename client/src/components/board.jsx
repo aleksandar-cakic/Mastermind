@@ -3,12 +3,9 @@ import '../stylesheets/input.css'
 import '../stylesheets/Feedback.css';
 import '../stylesheets/Board.css';
 
-const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked, updateColor, color, one, two, three, four, colorNum, updateRowCount,  }) => {
+const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked, updateColor, color, one, two, three, four, colorNum, gameOver, remainingGuesses, updateRowCount, restartGame, won, lost }) => {
 
-  const tinyPegs = []
-
-  console.log('data', data)
-  console.log('tiny', tinyPegs)
+  const initialState = '';
   const [pegs, setPegs] = useState(data);
   const [feedback, setFeedback] = useState(feedbackRow);
   const [addFormData, setAddFormData] = useState({
@@ -23,6 +20,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
     three: '',
     four: '',
   })
+
 
   const handleAddFormChange = async (event) => {
     await updateColor(event)
@@ -69,25 +67,33 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
 
   return (
     <div className='container'>
-      <table>
-        <tbody>
-          {pegs.map((peg, i) => (
-            <tr key={i}>
-              <td className='circle' style={{ backgroundColor: peg.one.color }}></td>
-              <td className='circle' style={{ backgroundColor: peg.two.color }}></td>
-              <td className='circle' style={{ backgroundColor: peg.three.color }}></td>
-              <td className='circle' style={{ backgroundColor: peg.four.color }}></td>
-              {peg.feedback.map((feed, i) => (
-                <td key={i} className='feedback' style={{ backgroundColor: feed === 'match' ? 'green' : feed === 'partial' ? 'yellow' : 'white' }}></td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {pegs ?
+        <table className='tableGuesses'>
+          <tbody>
+            {pegs.map((peg, i) => (
+              <tr key={i}>
+                <td className='circle' style={{ backgroundColor: peg.one.color }}></td>
+                <td className='circle' style={{ backgroundColor: peg.two.color }}></td>
+                <td className='circle' style={{ backgroundColor: peg.three.color }}></td>
+                <td className='circle' style={{ backgroundColor: peg.four.color }}></td>
+                {peg.feedback.map((feed, i) => (
+                  <td key={i} className='feedback' style={{ backgroundColor: feed === 'match' ? 'green' : feed === 'partial' ? 'yellow' : 'white' }}></td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        : null}
       <br></br>
+      {gameOver ? null : <div className='remainingGuesses'>{`${remainingGuesses} guesses remaining`}</div>}
+      {won === 1 ? <div className='score'>YOU WON!!!</div>
+        : lost === 1 ? <div className='score'>YOU LOST :((</div>
+          : null}
+      {gameOver ? <div className='restartGame' onClick={restartGame}>Play Again?</div> : null}
       <br></br>
+
       {newGame ?
-        <form onSubmit={handleAddFormSubmit}>
+        <form className='inputRow' onSubmit={handleAddFormSubmit}>
           <input className='circle'
             type='radio'
             name='one'
@@ -107,7 +113,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
             value={two.num}
             onClick={handleAddFormChange}
             id={two.color}
-            style={{ backgroundColor: name = 'two' ? two.color : 'white' }}
+            style={{ backgroundColor: two.color }}
           />
           <input
             className='circle'
@@ -118,7 +124,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
             value={three.num}
             onClick={handleAddFormChange}
             id={three.color}
-            style={{ backgroundColor: name = 'three' ? three.color : 'white' }}
+            style={{ backgroundColor: three.color }}
           />
           <input
             className='circle'
@@ -129,9 +135,11 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
             value={four.num}
             onClick={handleAddFormChange}
             id={four.color}
-            style={{ backgroundColor: name = 'four' ? four.color : 'white' }}
+            style={{ backgroundColor: four.color }}
           />
-          <button className='rowCheck' type='submit'>Check</button>
+          {gameOver ? null :
+            <button className='rowCheck' type='submit'>Check</button>
+          }
         </form>
         : ''}
     </div>

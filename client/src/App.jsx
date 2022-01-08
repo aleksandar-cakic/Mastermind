@@ -14,6 +14,7 @@ class App extends React.Component {
     this.checkWinCondition = this.checkWinCondition.bind(this)
     this.updateScore = this.updateScore.bind(this);
     this.startNewGame = this.startNewGame.bind(this);
+    this.restartGame = this.restartGame.bind(this);
 
     this.handleColorClick = this.handleColorClick.bind(this);
     this.updateColor = this.updateColor.bind(this);
@@ -44,7 +45,12 @@ class App extends React.Component {
       two: { color: 'white', num: 0 },
       three: { color: 'white', num: 0 },
       four: { color: 'white', num: 0 },
+      gameOver: false,
     }
+  }
+
+  restartGame() {
+    window.location.reload()
   }
 
   updateDifficulty(event) {
@@ -74,10 +80,10 @@ class App extends React.Component {
     })
   }
 
-  startNewGame(allPegs, feedbackRow) {
+  startNewGame() {
     this.setState({
       newGame: this.state.newGame ? false : true,
-      // reset the board (all rows and current row)
+      gameOver: false
     })
     this.state.newGame ? false : this.getSolution()
   }
@@ -86,12 +92,10 @@ class App extends React.Component {
     let newScore = this.state[score] + 1
 
     this.setState({
-      [score]: newScore
+      [score]: newScore,
+      gameOver: true
     })
 
-    this.startNewGame([], [])
-    // update win score if player's row === solution and restart game
-    // store pegs in app.jsx
   }
 
   getSolution() {
@@ -113,20 +117,20 @@ class App extends React.Component {
         })
     } else {
       axios.get('/api/randomUniqueNum')
-      .then(function (response) {
-        if (response.data) {
-          let data = response.data.solution.replace(/(\r\n|\n|\r)/gm, "");
-          _this.solutionRow = data.split('')
-          _this.setState({
-            solutionRow: _this.solutionRow
-          })
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+        .then(function (response) {
+          if (response.data) {
+            let data = response.data.solution.replace(/(\r\n|\n|\r)/gm, "");
+            _this.solutionRow = data.split('')
+            _this.setState({
+              solutionRow: _this.solutionRow
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
-}
 
   componentDidMount() {
     this.getSolution()
@@ -170,7 +174,6 @@ class App extends React.Component {
 
       if (count === 4) {
         this.updateScore('won')
-        // this.startNewGame(allPegs, feedbackRow)
       }
     }
 
@@ -191,16 +194,13 @@ class App extends React.Component {
           currentRow={this.state.currentRow}
           feedbackRow={this.state.feedbackRow}
           newGame={this.state.newGame}
-          won={this.state.won}
-          lost={this.state.lost}
           startNewGame={this.startNewGame}
           updateScore={this.updateScore}
           remainingGuesses={this.state.totalRows}
           currentDiff={this.state.currentDiff}
           updateDifficulty={this.updateDifficulty}
-
+          gameOver={this.state.gameOver}
         />
-
         <Input colors={this.colors} handleColorClick={this.handleColorClick} />
 
         <div className='board'>
@@ -219,9 +219,13 @@ class App extends React.Component {
             four={this.state.four}
             colorNum={this.state.colorNum}
             updateRowCount={this.updateRowCount}
+            remainingGuesses={this.state.totalRows}
+            gameOver={this.state.gameOver}
+            won={this.state.won}
+            lost={this.state.lost}
+            restartGame={this.restartGame}
           />
-          <div>{this.state.solutionRow}</div>
-          <br></br>
+          {this.state.gameOver ? <div>Solution: {this.state.solutionRow}</div> : null}
 
         </div>
       </div>

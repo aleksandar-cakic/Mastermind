@@ -1,4 +1,10 @@
 .difficulty {
   display: flex;
   justify-content: space-evenly;
+  margin: 5%;
 }
+
+.currentDifficulty {
+  font-weight: bold;
+}
+

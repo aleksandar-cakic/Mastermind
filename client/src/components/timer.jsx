@@ -1,6 +1,6 @@
 import React from "react";
 
-const Timer = ({ updateScore, currentDiff }) => {
+const Timer = ({ updateScore, currentDiff, gameOver }) => {
   console.log('currentDiff:', currentDiff)
   let time = currentDiff === 'Normal' ? 60 : currentDiff === 'Hard' ? 30 : currentDiff === 'Unfair' ? 10 : 90
   let [timer, setTimer] = React.useState(time)
@@ -19,7 +19,9 @@ const Timer = ({ updateScore, currentDiff }) => {
 
   return (
     <div className="timer">
+      {gameOver === true ? null :
       <div>Timer: {timer} sec</div>
+    }
     </div>
   );
 }
