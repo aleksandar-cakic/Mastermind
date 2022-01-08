@@ -113,6 +113,7 @@ class App extends React.Component {
     console.log('Current Values:', newPegs)
     let currentRow = newPegs.slice(0, 4);
     let feedbackRow = newPegs[4];
+    console.log('TRUEEEEEfeedbackRow:', feedbackRow.slice(-4))
     let { solutionRow } = this;
     let remainingSolution = solutionRow.slice()
     let count = 0
@@ -192,7 +193,7 @@ class App extends React.Component {
           colorNum={this.state.colorNum}
           updateRowCount={this.updateRowCount}
           />
-          {/* <div>{this.state.solutionRow}</div> */}
+          <div>{this.state.solutionRow}</div>
           <br></br>
 
         </div>

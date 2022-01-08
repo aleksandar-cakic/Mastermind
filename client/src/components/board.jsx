@@ -43,7 +43,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
       two: addFormData.two,
       three: addFormData.three,
       four: addFormData.four,
-      feedback: feedback,
+      feedback: feedback.length > 4 ? feedback.slice(-4) : feedback,
     };
 
     const newPegs = [...pegs, newPeg];
@@ -56,10 +56,8 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
       four: feedback[3],
     }
 
-    console.log(newFeed)
     const newFeedback = [...feedback, newFeed]
     setFeedback(newFeedback)
-    console.log('newFeedback:', newFeedback)
 
     const currentPegs = Object.values(newPegs[newPegs.length - 1])
     updateRowCount()
@@ -77,7 +75,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
               <td className='circle' style={{ backgroundColor: peg.three.color }}></td>
               <td className='circle' style={{ backgroundColor: peg.four.color }}></td>
               {peg.feedback.map((feed, i) => (
-                <td key={i} className='feedback' style={{ backgroundColor: feed === 'match' ? 'green' : feed === 'partial' ? 'yellow' : 'white' }}>{feed}</td>
+                <td key={i} className='feedback' style={{ backgroundColor: feed === 'match' ? 'green' : feed === 'partial' ? 'yellow' : 'white' }}></td>
               ))}
             </tr>
           ))}
