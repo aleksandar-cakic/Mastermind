@@ -41,7 +41,7 @@ router.delete('/game', (req, res, next) => {
 });
 
 router.get('/randomNum', (req, res, next) => {
-  axios.get('http://www.random.org/integers/?num=4&min=0&max=7&rnd=new&base=10&col=1&format=plain')
+  axios.get('http://www.random.org/integers/', { params: {num: 4, min: 0, max: 7, rnd: 'new', base: 10, col: 1, format: 'plain'}})
     .then(function (response) {
       if (response.data) {
         Game.create({ solution: response.data })
@@ -59,7 +59,7 @@ router.get('/randomNum', (req, res, next) => {
 })
 
 router.get('/randomUniqueNum', (req, res, next) => {
-  axios.get('http://www.random.org/sequences/?min=0&max=7&rnd=new&col=1&num=4&format=plain')
+  axios.get('http://www.random.org/sequences/', { params: {num: 4, min: 0, max: 7, rnd: 'new', col: 1, format: 'plain'}})
     .then(function (response) {
       if (response.data) {
         Game.create({ solution: response.data.slice(0, 7) })

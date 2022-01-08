@@ -1,7 +1,9 @@
 import React from "react";
 
-const Timer = ({updateScore}) => {
-  let [timer, setTimer] = React.useState(60);
+const Timer = ({ updateScore, currentDiff }) => {
+  console.log('currentDiff:', currentDiff)
+  let time = currentDiff === 'Normal' ? 60 : currentDiff === 'Hard' ? 30 : currentDiff === 'Unfair' ? 10 : 90
+  let [timer, setTimer] = React.useState(time)
 
   React.useEffect(() => {
    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000)

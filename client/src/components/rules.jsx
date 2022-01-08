@@ -55,30 +55,35 @@ class Rules extends React.Component {
 
   render() {
     const rulesButton = this.state.showRules ? 'Show Rules' : 'Hide Rules';
-    const currentDifficulty = this.state.currentDiff === 'Easy' ? <h4>No timer, no duplicate pegs</h4>
-      : this.state.currentDiff === 'Normal' ? <h4>Timer at 60 sec, duplicate pegs</h4>
-        : this.state.currentDiff === 'Hard' ? <h4>Timer at 30 sec, duplicate pegs</h4>
-          : this.state.currentDiff === 'Unfair' ? <h4>Don't think, just play. Timer starts at 1000</h4>
+    const currentDifficulty = this.props.currentDiff === 'Easy' ? <h4>Timer at 90 sec, no duplicate pegs</h4>
+      : this.props.currentDiff === 'Normal' ? <h4>Timer at 60 sec, duplicate pegs</h4>
+        : this.props.currentDiff === 'Hard' ? <h4>Timer at 30 sec, duplicate pegs</h4>
+          : this.props.currentDiff === 'Unfair' ? <h4>Don't think, just play.</h4>
             : ''
 
     return (
       <div className='rules'>
-        <StyledButton onClick={this.props.startNewGame}>{this.props.newGame ? 'End Game' : 'New Game'}</StyledButton>
+      {this.props.newGame ? null :
+      <div>
+        <StyledButton onClick={this.props.startNewGame}>Start Game</StyledButton>
         <StyledButton onClick={this.showRules}>{rulesButton}</StyledButton>
         {!this.state.showRules ? this.state.ruleInfo.map((rule, i) => (
           <h3 key={i}>{rule}</h3>)) : ''}
         <h2>Difficulty</h2>
         <div className='difficulty'>
           {this.state.difficulty.map((item, i) => (
-            <div onClick={this.updateDifficulty} key={i} id={item}>{item}</div>
-          ))}
+            <div onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
+            ))}
         </div>
-        <h3>Current Difficulty: {this.state.currentDiff}</h3>
+        </div>
+          }
+
+        <h3>Current Difficulty: {this.props.currentDiff}</h3>
         {currentDifficulty
         }
         <div className='score'>Won: {this.props.won} Lost: {this.props.lost}</div>
         <div className='remainingGuesses'>{`${this.props.remainingGuesses} guesses remaining`}</div>
-        {this.props.newGame ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} /> : <div className='timer'></div>}
+        {this.props.newGame ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} currentDiff={this.props.currentDiff} /> : <div className='timer'></div>}
         <br></br>
       </div>
     )

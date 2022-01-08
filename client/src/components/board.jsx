@@ -6,6 +6,9 @@ import '../stylesheets/Board.css';
 const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked, updateColor, color, one, two, three, four, colorNum, updateRowCount,  }) => {
 
   const tinyPegs = []
+
+  console.log('data', data)
+  console.log('tiny', tinyPegs)
   const [pegs, setPegs] = useState(data);
   const [feedback, setFeedback] = useState(feedbackRow);
   const [addFormData, setAddFormData] = useState({

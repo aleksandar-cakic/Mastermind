@@ -30,15 +30,16 @@ input:focus {
 
 .title {
   display: flex;
-  justify-content:center
+  justify-content:space-evenly;
+  align-items: center;
 }
 
 .logo {
   display: flex;
   align-items: center;
   font-style: Sans-Serif;
-  width: 130px;
-  height: 60px;
+  width: 1em;
+  height: 3em;
   color: #1666C5;
   font-weight: bold;
 }

@@ -18,6 +18,7 @@ class App extends React.Component {
     this.handleColorClick = this.handleColorClick.bind(this);
     this.updateColor = this.updateColor.bind(this);
     this.updateRowCount = this.updateRowCount.bind(this);
+    this.updateDifficulty = this.updateDifficulty.bind(this);
 
     this.solutionRow = [];
     this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown'];
@@ -39,13 +40,19 @@ class App extends React.Component {
       solutionRow: this.solutionRow,
       color: 'white',
       colorNum: 0,
-      one: {color: 'white', num: 0},
-      two: {color: 'white', num: 0},
-      three: {color: 'white', num: 0},
-      four: {color: 'white', num: 0},
+      one: { color: 'white', num: 0 },
+      two: { color: 'white', num: 0 },
+      three: { color: 'white', num: 0 },
+      four: { color: 'white', num: 0 },
     }
   }
 
+  updateDifficulty(event) {
+    this.setState({
+      currentDiff: event.target.id
+    })
+
+  }
   updateRowCount() {
     this.setState({
       totalRows: this.state.totalRows - 1
@@ -63,7 +70,7 @@ class App extends React.Component {
 
   updateColor(event) {
     this.setState({
-      [event.target.name] : {color: this.state.color, num: this.state.colorNum}
+      [event.target.name]: { color: this.state.color, num: this.state.colorNum }
     })
   }
 
@@ -72,8 +79,6 @@ class App extends React.Component {
       newGame: this.state.newGame ? false : true,
       // reset the board (all rows and current row)
     })
-    this.pegs = []
-    this.feedbackRow = []
     this.state.newGame ? false : this.getSolution()
   }
 
@@ -83,13 +88,31 @@ class App extends React.Component {
     this.setState({
       [score]: newScore
     })
+
+    this.startNewGame([], [])
     // update win score if player's row === solution and restart game
     // store pegs in app.jsx
   }
 
   getSolution() {
     const _this = this;
-    axios.get('/api/randomNum')
+
+    if (this.state.currentDiff === 'Easy') {
+      axios.get('/api/randomNum')
+        .then(function (response) {
+          if (response.data) {
+            let data = response.data.solution.replace(/(\r\n|\n|\r)/gm, "");
+            _this.solutionRow = data.split('')
+            _this.setState({
+              solutionRow: _this.solutionRow
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    } else {
+      axios.get('/api/randomUniqueNum')
       .then(function (response) {
         if (response.data) {
           let data = response.data.solution.replace(/(\r\n|\n|\r)/gm, "");
@@ -103,17 +126,15 @@ class App extends React.Component {
         console.log(error)
       })
   }
+}
 
   componentDidMount() {
     this.getSolution()
   }
 
   checkWinCondition(newPegs, allPegs, newFeedback) {
-    console.log('newFeedback:', newFeedback)
-    console.log('Current Values:', newPegs)
     let currentRow = newPegs.slice(0, 4);
     let feedbackRow = newPegs[4];
-    console.log('TRUEEEEEfeedbackRow:', feedbackRow.slice(-4))
     let { solutionRow } = this;
     let remainingSolution = solutionRow.slice()
     let count = 0
@@ -142,7 +163,6 @@ class App extends React.Component {
       }
     }))
 
-    // test the winning condition
     for (let i = 0; i < feedbackRow.length; i++) {
       if (feedbackRow[i] === 'match') {
         count++
@@ -150,8 +170,12 @@ class App extends React.Component {
 
       if (count === 4) {
         this.updateScore('won')
-        this.startNewGame(allPegs, feedbackRow)
+        // this.startNewGame(allPegs, feedbackRow)
       }
+    }
+
+    if (allPegs.length === 10 && count !== 4) {
+      this.updateScore('lost')
     }
   }
 
@@ -172,26 +196,29 @@ class App extends React.Component {
           startNewGame={this.startNewGame}
           updateScore={this.updateScore}
           remainingGuesses={this.state.totalRows}
-          />
+          currentDiff={this.state.currentDiff}
+          updateDifficulty={this.updateDifficulty}
+
+        />
 
         <Input colors={this.colors} handleColorClick={this.handleColorClick} />
 
         <div className='board'>
           <Board
-          test={this.state.feedbackRow}
-          feedbackRow={this.feedbackRow}
-          data={this.pegs}
-          checkWinCondition={this.checkWinCondition}
-          newGame={this.state.newGame}
-          isChecked={this.state.isChecked}
-          color={this.state.color}
-          updateColor={this.updateColor}
-          one={this.state.one}
-          two={this.state.two}
-          three={this.state.three}
-          four={this.state.four}
-          colorNum={this.state.colorNum}
-          updateRowCount={this.updateRowCount}
+            test={this.state.feedbackRow}
+            feedbackRow={this.feedbackRow}
+            data={this.pegs}
+            checkWinCondition={this.checkWinCondition}
+            newGame={this.state.newGame}
+            isChecked={this.state.isChecked}
+            color={this.state.color}
+            updateColor={this.updateColor}
+            one={this.state.one}
+            two={this.state.two}
+            three={this.state.three}
+            four={this.state.four}
+            colorNum={this.state.colorNum}
+            updateRowCount={this.updateRowCount}
           />
           <div>{this.state.solutionRow}</div>
           <br></br>
