@@ -300,8 +300,8 @@ const handleAddFormSubmit = (event) => {
 
     const newPegs = [...pegs, newPeg];
     setPegs(newPegs);
-    ```
-
+```
+---
 
 # Front End Look
 
