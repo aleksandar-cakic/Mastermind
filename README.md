@@ -3,7 +3,7 @@
 ## Setup
 - **Clone/pull repo**
 - `npm install`
-- `npm start-watch` for the server
+- `npm start-watch` for the server and database
 - `npm run bundle` (in a separate terminal) for webpack/react/index.html
 - Navigate to `http://localhost:3000` in browser
 
