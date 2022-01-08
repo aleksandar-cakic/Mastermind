@@ -8,7 +8,7 @@
 - Navigate to `http://localhost:3000`or `http://localhost:4000` in browser, depending on the port used
 
 ## Code Structure 
-[image](<img width="200" alt="Screen Shot 2022-01-08 at 12 17 22 AM" src="https://user-images.githubusercontent.com/78227541/148633945-d2a036fe-12b5-4345-82a7-08f81d0698af.png">)
+<img width="200" alt="Screen Shot 2022-01-08 at 12 17 22 AM" src="https://user-images.githubusercontent.com/78227541/148633945-d2a036fe-12b5-4345-82a7-08f81d0698af.png">
 
 ## Thought Process and Detailed Steps Taken During This Project 
 [Engineering Journal - https://gist.github.com/aleksandar-cakic/678f9993f36f8cc2560dc80ded34aa35](https://gist.github.com/aleksandar-cakic/678f9993f36f8cc2560dc80ded34aa35)
