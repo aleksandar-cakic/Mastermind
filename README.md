@@ -1,6 +1,17 @@
 # Mastermind
 
-To run:
+## Setup
+- **Clone/pull repo**
+- `npm install`
+- `npm start-watch` for the server
+- `npm run bundle` (in a separate terminal) for webpack/react/index.html
+- Navigate to `http://localhost:3000` in browser
+
+## Code Structure 
+
+## Thought Process 
+[Engineering Journal - https://gist.github.com/aleksandar-cakic/678f9993f36f8cc2560dc80ded34aa35](https://gist.github.com/aleksandar-cakic/678f9993f36f8cc2560dc80ded34aa35)
+## Creative Extensions 
 
 Thought process:
 
@@ -23,15 +34,3 @@ I used MERN stack to develop this project. First part was setting up the structu
 - Retesting with LoaderIo
 - Ensuring 90% Google Data
 - Working on Advanced Content
-
-Please make sure your project contains a README.md. This README should explain how an
-interviewer could run your code, document your thought process and/or code structure, and
-describe any creative extensions attempted or implemented. There is no prescribed format for
-the README, but it should be clear and unambiguous in listing all the steps in building, running,
-and playing the game you built (you should make no assumptions about what software the
-interviewer has, and err on the side of being explicit). Your interviewers will be engineers, so
-you can assume a certain level of technical ability as relates to installing what your project
-requires.
-
-If submitting through a public repository is not an option for you, please reach out to your
-recruiter for an alternative solution.
