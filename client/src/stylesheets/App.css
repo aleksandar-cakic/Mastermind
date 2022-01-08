@@ -35,34 +35,23 @@ input:focus {
 
 .title {
   display: flex;
-  justify-content:space-evenly;
+  justify-content:center;
   align-items: center;
   height: 6em;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
   font-style: Sans-Serif;
-  width: 1em;
-  height: 3em;
   color: #1666C5;
   font-weight: bold;
 }
 
 .logo2 {
-  display: flex;
-  align-items: center;
   font-style: Sans-Serif;
-  width: 100px;
-  height: 60px;
-  background:#0a66c2;
-  position: relative;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
   color: white;
   font-weight: bold;
+  background-color: #1666C5;
+  border-radius: 10%;
 }
 
 button {
