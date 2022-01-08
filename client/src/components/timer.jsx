@@ -1,20 +1,19 @@
 import React from "react";
 
 const Timer = ({updateScore}) => {
-  let [timer, setTimer] = React.useState(1000);
+  let [timer, setTimer] = React.useState(60);
 
   React.useEffect(() => {
    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000)
+
+   if (timer === 0) {
+     return updateScore('lost')
+   }
+
    return () => {
     clearTimeout(timer);
   }
 }, [timer]);
-
-  React.useEffect(() => {
-   if (timer === 0) {
-     // maybe start a new game or block further moves
-     return updateScore('lost')
-   }}, [])
 
   return (
     <div className="timer">

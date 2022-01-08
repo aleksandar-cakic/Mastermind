@@ -1,9 +1,13 @@
 .App {
   text-align: center;
   font-size: calc(10px + 2vmin);
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 80%;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-style: Sans-Serif;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f3f2ef;
+
 }
 
 input {
@@ -16,19 +20,55 @@ input {
   color: #787a80;
 }
 
+h2, h3 {
+  color: #0a66c2;
+}
+
 input:focus {
   outline: none;
 }
 
+.title {
+  display: flex;
+  justify-content:center
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-style: Sans-Serif;
+  width: 130px;
+  height: 60px;
+  color: #1666C5;
+  font-weight: bold;
+}
+
+.logo2 {
+  display: flex;
+  align-items: center;
+  font-style: Sans-Serif;
+  width: 100px;
+  height: 60px;
+  background:#0a66c2;
+  position: relative;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+}
+
 button {
-  width: 25%;
-  height: 45px;
+  background-color: #1666C5;
+  width: 15rem;
+  height: 3rem;
   border: none;
-  margin-left: 10px;
-  font-size: 25px;
-  background: #101113;
-  border-radius: 5px;
-  color: #787a80;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2rem;
   cursor: pointer;
 }
 

@@ -1,0 +1,63 @@
+.circle{
+  height: 2em;
+  width: 2em;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+}
+
+input:checked {
+  border: 6px solid black;
+}
+
+
+#red {
+  background-color:red;
+}
+
+#blue {
+  background-color:blue;
+}
+
+#green {
+  background-color:green;
+}
+
+#purple {
+  background-color:purple;
+}
+
+#orange {
+  background-color:orange;
+}
+
+#brown {
+  background-color:brown;
+}
+
+#cyan {
+  background-color:cyan;
+}
+
+#yellow {
+  background-color:yellow;
+}
+
+
+

@@ -1,7 +1,11 @@
 .board {
-  border-style: solid;
+  border-style:groove;
+  border-color:#1666C5;
 }
 
-.board-history {
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
