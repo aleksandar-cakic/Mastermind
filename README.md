@@ -3,9 +3,9 @@
 ## Setup
 - **Clone/pull repo**
 - `npm install`
-- `npm start-watch` for the server and database
+- `npm start` for the server and database
 - `npm run bundle` (in a separate terminal) for webpack/react/index.html
-- Navigate to `http://localhost:3000`or `http://localhost:4000` in browser, depending on the port used
+- Navigate to `http://localhost:3000`or `http://localhost:4000` in browser, depending on the port used (will show port number in Express Terminal)
 - App was tested on Google Chrome
 
 ## Thought Process and Detailed Steps Taken During This Project (also after Code Structure in this README.md)
