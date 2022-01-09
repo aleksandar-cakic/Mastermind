@@ -61,12 +61,11 @@ class Rules extends React.Component {
               <h5 key={i}>{rule}</h5>)) : ''}
             <div className='difficulty'>
               {this.state.difficulty.map((item, i) => (
-                <div onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
+                <div className={item === this.props.currentDiff ? 'currentDifficulty' : ''} onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
               ))}
             </div>
           </div>
-      }
-        <div className='currentDifficulty'>Current Difficulty: {this.props.currentDiff}</div>
+        }
         {!this.props.newGame ? currentDifficulty : null}
         {this.props.won === 1 ? <div className='score'>YOU WON!!!</div>
           : this.props.lost === 1 ? <div className='score'>YOU LOST :((</div>

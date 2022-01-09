@@ -3,7 +3,7 @@ import '../stylesheets/input.css'
 import '../stylesheets/Feedback.css';
 import '../stylesheets/Board.css';
 
-const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked, updateColor, color, one, two, three, four, colorNum, gameOver, remainingGuesses, updateRowCount, restartGame, won, lost }) => {
+const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked, updateColor, color, one, two, three, four, colorNum, gameOver, remainingGuesses, updateRowCount, restartGame, won, lost, resetState }) => {
 
   const initialState = '';
   const [pegs, setPegs] = useState(data);
@@ -62,6 +62,8 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
     const currentPegs = Object.values(newPegs[newPegs.length - 1])
     updateRowCount()
     checkWinCondition(currentPegs, newPegs, newFeedback)
+    resetState()
+    event.target.reset()
   }
 
   return (
@@ -137,7 +139,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
             style={{ backgroundColor: four.color }}
           />
           {gameOver ? null :
-            <button className='rowCheck' type='submit'>Check</button>
+            <button className='rowCheck' type='submit' value='submit' id='submit'>Check</button>
           }
         </form>
         : ''}

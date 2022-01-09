@@ -5,6 +5,7 @@ import Rules from './components/rules.jsx';
 import axios from 'axios';
 
 import './stylesheets/Board.css';
+import './stylesheets/input.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends React.Component {
     this.updateColor = this.updateColor.bind(this);
     this.updateRowCount = this.updateRowCount.bind(this);
     this.updateDifficulty = this.updateDifficulty.bind(this);
+    this.resetState = this.resetState.bind(this)
 
     this.solutionRow = [];
     this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown'];
@@ -34,7 +36,7 @@ class App extends React.Component {
       feedbackRow: [],
       pegs: [],
       totalRows: 10,
-      isChecked: false,
+      isChecked: null,
       newGame: false,
       won: 0,
       lost: 0,
@@ -57,7 +59,6 @@ class App extends React.Component {
     this.setState({
       currentDiff: event.target.id
     })
-
   }
   updateRowCount() {
     this.setState({
@@ -66,6 +67,7 @@ class App extends React.Component {
   }
 
   handleColorClick(event) {
+    event.target.classList.add('border_checked')
     this.setState({
       color: event.target.id,
       colorNum: event.target.getAttribute('value')
@@ -140,21 +142,34 @@ class App extends React.Component {
     let count = 0
 
     for (let i = 0; i < currentRow.length; i++) {
-
       if (currentRow[i].value === remainingSolution[i]) {
         remainingSolution.splice(i, 1, -1)
         feedbackRow[i] = 'match'
-      } else if (remainingSolution.indexOf(currentRow[i].value) !== -1) {
+        console.log('hit MATCH')
+        continue;
+      } else {
+        console.log('hit MISS')
+        feedbackRow[i] = 'miss'
+      }
+    }
+
+    for (let i = 0; i < currentRow.length; i++) {
+      if (remainingSolution.indexOf(currentRow[i].value) !== -1) {
+        console.log('hit PARTIAL')
         let index = remainingSolution.indexOf(currentRow[i].value)
         remainingSolution.splice(index, 1, -1)
         feedbackRow[i] = 'partial'
-      } else {
-        feedbackRow[i] = 'miss'
+        continue
       }
     }
 
     feedbackRow.sort()
     this.trueFeedback.push(this.feedbackRow)
+
+    console.log('feedback', feedbackRow)
+    console.log('remainingSolution', remainingSolution)
+    console.log('currentRow', currentRow)
+    console.log('solutionRow', solutionRow)
 
     this.setState(prevState => ({
       feedbackRow: {
@@ -178,6 +193,15 @@ class App extends React.Component {
     }
   }
 
+  resetState() {
+    this.setState({
+      one: { color: 'white', num: 0 },
+      two: { color: 'white', num: 0 },
+      three: { color: 'white', num: 0 },
+      four: { color: 'white', num: 0 },
+    })
+  }
+
   render() {
     return (
       <div className='App'>
@@ -197,7 +221,10 @@ class App extends React.Component {
           updateDifficulty={this.updateDifficulty}
           gameOver={this.state.gameOver}
         />
-        <Input colors={this.colors} handleColorClick={this.handleColorClick} />
+
+        <Input colors={this.colors}
+          currentColor={this.state.color}
+          handleColorClick={this.handleColorClick} />
 
         <div className='board'>
           <Board
@@ -220,8 +247,16 @@ class App extends React.Component {
             won={this.state.won}
             lost={this.state.lost}
             restartGame={this.restartGame}
+            resetState={this.resetState}
           />
-          {this.state.gameOver ? <div>Solution: {this.state.solutionRow}</div> : null}
+          {this.state.gameOver ?
+          <div className='solution'>
+          <div>Solution</div>
+          {this.state.solutionRow.map((solution, i) => (
+            <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
+          ))}
+          </div>
+           : null }
 
         </div>
       </div>
