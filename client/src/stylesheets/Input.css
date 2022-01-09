@@ -26,6 +26,14 @@ input:checked {
   border: 6px solid black;
 }
 
+.border_checked {
+  border: solid black;
+}
+
+.border_unchecked {
+  border: solid #999;
+}
+
 #red {
   background-color:red;
 }
@@ -57,6 +65,3 @@ input:checked {
 #yellow {
   background-color:yellow;
 }
-
-
-

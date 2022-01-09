@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-evenly;
   margin: 5%;
-}
+border: solid #1666C5}
 
 .currentDifficulty {
   font-weight: bold;
