@@ -8,6 +8,14 @@
 - Navigate to `http://localhost:3000`or `http://localhost:4000` in browser, depending on the port used (will show port number in Express Terminal)
 - App was tested on Google Chrome
 
+# HOW TO PLAY THE GAME 
+- Choose difficulty by clicking on 'Easy', 'Normal', 'Hard' or 'Unfair' (Normal is default)
+- Click on 'Start Game' 
+- Choose a color from the color row and click on the empty slot where you'd like to place the color
+- Once all empty slots have been filled, click on the 'Check' button to submit the input row
+- The feedback on the right hand side will show green for a matching color in the correct spot, yellow for a correct color in the wrong spot and white for a miss. The feedback does not show the correct place, just the number of correct guesses
+- Once you have 4 green marks on the feedback row, you win!
+
 ## Thought Process and Detailed Steps Taken During This Project (also after Code Structure in this README.md)
 [Engineering Journal - https://gist.github.com/aleksandar-cakic/678f9993f36f8cc2560dc80ded34aa35](https://gist.github.com/aleksandar-cakic/678f9993f36f8cc2560dc80ded34aa35)
 
