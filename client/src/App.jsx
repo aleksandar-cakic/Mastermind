@@ -132,10 +132,6 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.getSolution()
-  }
-
   checkWinCondition(newPegs, allPegs, newFeedback) {
     let currentRow = newPegs.slice(0, 4);
     let feedbackRow = newPegs[4];

@@ -1,4 +1,5 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './client/src/index.jsx',
@@ -7,14 +8,11 @@ module.exports = {
     path: path.resolve(__dirname, 'client/dist'),
   },
   mode: 'development',
-  // devServer: {
-  //   port: 3000,
-  //   static: true
-  // },
   module: {
     rules: [
       {
-        test: /\.jsx?/,
+        test: /\.(js|jsx)$/,
+       exclude: /nodeModules/,
         loader: "babel-loader",
         options: {
           presets: ["@babel/preset-env", "@babel/preset-react"]
@@ -26,4 +24,5 @@ module.exports = {
       }
     ],
   },
+  plugins: [new HtmlWebpackPlugin({template: 'client/src/index.html'})],
 };
