@@ -27,7 +27,7 @@ class Rules extends React.Component {
       correctly`],
       difficulty: ['Easy', 'Normal', 'Hard', 'Unfair'],
       currentDiff: 'Normal',
-      style: 'normal'
+      style: 'normal',
     }
   }
 
@@ -67,11 +67,12 @@ class Rules extends React.Component {
           </div>
         }
         {!this.props.newGame ? currentDifficulty : null}
-        {this.props.won === 1 ? <div className='score'>YOU WON!!!</div>
-          : this.props.lost === 1 ? <div className='score'>YOU LOST :((</div>
-            : null}
         {this.props.newGame ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} currentDiff={this.props.currentDiff} gameOver={this.props.gameOver} /> : <div className='timer'></div>}
+
+{/* {this.props.gameOver ? this.props.gameWon ? <div className='score'>YOU WON!!!</div> : <div className='score'>YOU LOST :((</div> : null} */}
+
         <br></br>
+        <div>Win: {this.props.won} Lost: {this.props.lost}</div>
       </div>
     )
   }

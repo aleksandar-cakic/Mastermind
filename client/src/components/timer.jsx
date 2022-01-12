@@ -1,7 +1,7 @@
 import React from "react";
 
 const Timer = ({ updateScore, currentDiff, gameOver }) => {
-  let time = currentDiff === 'Normal' ? 60 : currentDiff === 'Hard' ? 30 : currentDiff === 'Unfair' ? 10 : 90
+  let time = currentDiff === 'Normal' ? 60 : currentDiff === 'Hard' ? 10 : currentDiff === 'Unfair' ? 1 : 90
   let [timer, setTimer] = React.useState(time)
 
   React.useEffect(() => {

@@ -22,6 +22,8 @@ class App extends React.Component {
     this.updateRowCount = this.updateRowCount.bind(this);
     this.updateDifficulty = this.updateDifficulty.bind(this);
     this.resetState = this.resetState.bind(this)
+    this.firstTimeSetup = this.firstTimeSetup.bind(this)
+    this.playAgainSetup = this.playAgainSetup.bind(this)
 
     this.solutionRow = [];
     this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown'];
@@ -30,14 +32,18 @@ class App extends React.Component {
     this.trueFeedback = []
     this.pegs = []
 
+    this.firstTimeSetup()
+  }
+
+  firstTimeSetup() {
     this.state = {
       currentDiff: 'Normal',
       currentRow: ['1', '2', '2', '4'],
       feedbackRow: [],
       pegs: [],
       totalRows: 10,
-      isChecked: null,
       newGame: false,
+      isChecked: null,
       won: 0,
       lost: 0,
       solutionRow: this.solutionRow,
@@ -48,11 +54,41 @@ class App extends React.Component {
       three: { color: 'white', num: 0 },
       four: { color: 'white', num: 0 },
       gameOver: false,
+      gameWon: false,
     }
   }
 
+  playAgainSetup() {
+    this.setState({
+      currentDiff: 'Normal',
+      // currentRow: ['1', '2', '2', '4'],
+      feedbackRow: [],
+      pegs: [],
+      totalRows: 10,
+      // newGame: false,
+      // solutionRow: this.solutionRow,
+      newGame: false,
+      color: 'white',
+      colorNum: 0,
+      one: { color: 'white', num: 0 },
+      two: { color: 'white', num: 0 },
+      three: { color: 'white', num: 0 },
+      four: { color: 'white', num: 0 },
+      gameOver: false,
+      gameWon: false,
+      addForm: {
+        one: '',
+        two: '',
+        three: '',
+        four: '',
+      }
+    })
+
+  }
+
   restartGame() {
-    window.location.reload()
+    // window.location.reload()
+    this.playAgainSetup()
   }
 
   updateDifficulty(event) {
@@ -93,9 +129,18 @@ class App extends React.Component {
 
     this.setState({
       [score]: newScore,
-      gameOver: true
+      gameOver: true,
     })
 
+    if (score === 'won') {
+      this.setState({
+        gameWon: true
+      })
+    } else {
+      this.setState({
+        gameWon: false
+      })
+    }
   }
 
   getSolution() {
@@ -174,8 +219,10 @@ class App extends React.Component {
     this.setState(prevState => ({
       feedbackRow: {
         ...prevState.feedbackRow,
-        [this.trueFeedback.length - 1]: this.feedbackRow
+
       }
+    }, () => {
+      console.log('feedbackSTATE', feedbackRow)
     }))
 
     for (let i = 0; i < feedbackRow.length; i++) {
@@ -220,6 +267,9 @@ class App extends React.Component {
           currentDiff={this.state.currentDiff}
           updateDifficulty={this.updateDifficulty}
           gameOver={this.state.gameOver}
+          won={this.state.won}
+          lost={this.state.lost}
+          gameWon={this.state.gameWon}
         />
 
         <Input colors={this.colors}
@@ -229,8 +279,8 @@ class App extends React.Component {
         <div className='board'>
           <Board
             test={this.state.feedbackRow}
-            feedbackRow={this.feedbackRow}
-            data={this.pegs}
+            feedbackRow={this.state.feedbackRow}
+            data={this.state.pegs}
             checkWinCondition={this.checkWinCondition}
             newGame={this.state.newGame}
             isChecked={this.state.isChecked}
@@ -248,16 +298,20 @@ class App extends React.Component {
             lost={this.state.lost}
             restartGame={this.restartGame}
             resetState={this.resetState}
+            gameWon={this.state.gameWon}
+            addForm={this.state.addForm}
           />
           {this.state.gameOver ?
-          <div className='solution'>
-          <div>Solution</div>
+            <div className='solution'>
+              <div>Solution</div>
+              {this.state.solutionRow.map((solution, i) => (
+                <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
+              ))}
+            </div>
+            : null}
           {this.state.solutionRow.map((solution, i) => (
             <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
           ))}
-          </div>
-           : null }
-
         </div>
       </div>
     )
