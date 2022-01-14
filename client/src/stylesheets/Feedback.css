@@ -1,7 +1,8 @@
 .feedback {
   height: 1em;
   width: 1em;
-  background-color: rgb(189, 177, 177);
+  background-color: var(--primaryBackgroundColor);
+  border-color: var(--secondaryBackgroundColor);
   border-radius: 20%;
   margin-inline: 1%;
   margin: 5%;

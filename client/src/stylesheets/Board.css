@@ -15,3 +15,20 @@
 .inputRow {
   display: inline-block;
 }
+
+.score, .hints, .feedback, .timer, .remainingGuesses, .difficulty-details, h5, .difficulty {
+  color: var(--headerColor)
+}
+
+.difficulty {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 5%;
+  border: solid #1666C5
+}
+
+.currentDifficulty {
+  font-weight: bold;
+}
+
+

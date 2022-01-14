@@ -2,8 +2,8 @@ import React from 'react';
 import Board from './components/board.jsx';
 import Input from './components/input.jsx';
 import Rules from './components/rules.jsx';
+import DarkToggle from './components/darkToggle.jsx'
 import axios from 'axios';
-
 import './stylesheets/Board.css';
 import './stylesheets/input.css';
 
@@ -16,7 +16,6 @@ class App extends React.Component {
     this.updateScore = this.updateScore.bind(this);
     this.startNewGame = this.startNewGame.bind(this);
     this.restartGame = this.restartGame.bind(this);
-
     this.handleColorClick = this.handleColorClick.bind(this);
     this.updateColor = this.updateColor.bind(this);
     this.updateRowCount = this.updateRowCount.bind(this);
@@ -24,9 +23,12 @@ class App extends React.Component {
     this.resetState = this.resetState.bind(this)
     this.firstTimeSetup = this.firstTimeSetup.bind(this)
     this.playAgainSetup = this.playAgainSetup.bind(this)
+    this.revealHint = this.revealHint.bind(this)
 
     this.solutionRow = [];
-    this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown'];
+    this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown', 'salmon', 'lime', 'gold', 'pink', 'black', 'grey', 'magenta'
+    ];
+
     this.currentRow = ['1', '2', '2', '4'];
     this.feedbackRow = []
     this.trueFeedback = []
@@ -55,18 +57,19 @@ class App extends React.Component {
       four: { color: 'white', num: 0 },
       gameOver: false,
       gameWon: false,
+      hint: '',
+      hint2: '',
+      hintRevealed: { one: false, two: false },
     }
   }
+
 
   playAgainSetup() {
     this.setState({
       currentDiff: 'Normal',
-      // currentRow: ['1', '2', '2', '4'],
       feedbackRow: [],
       pegs: [],
       totalRows: 10,
-      // newGame: false,
-      // solutionRow: this.solutionRow,
       newGame: false,
       color: 'white',
       colorNum: 0,
@@ -81,13 +84,14 @@ class App extends React.Component {
         two: '',
         three: '',
         four: '',
-      }
+      },
+      hint: '',
+      hint2: '',
+      hintRevealed: 'Click to reveal hint'
     })
-
   }
 
   restartGame() {
-    // window.location.reload()
     this.playAgainSetup()
   }
 
@@ -117,6 +121,7 @@ class App extends React.Component {
   }
 
   startNewGame() {
+    console.log(this.state.currentDiff)
     this.setState({
       newGame: this.state.newGame ? false : true,
       gameOver: false
@@ -145,7 +150,6 @@ class App extends React.Component {
 
   getSolution() {
     const _this = this;
-
     if (this.state.currentDiff === 'Easy') {
       axios.get('/api/randomNum')
         .then(function (response) {
@@ -154,6 +158,27 @@ class App extends React.Component {
             _this.solutionRow = data.split('')
             _this.setState({
               solutionRow: _this.solutionRow
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    } else if (this.state.currentDiff === 'Unfair') {
+      axios.get('/api/unfairNum')
+        .then(function (response) {
+          if (response.data) {
+            let data = response.data.solution.replace(/(\r\n|\n|\r)/gm, "");
+            if (data.split('').length > 4) {
+              _this.solutionRow = data.split('').slice(0, 4)
+            } else {
+              _this.solutionRow = data.split('')
+            }
+
+            _this.setState({
+              solutionRow: _this.solutionRow
+            }, () => {
+              console.log(_this.solutionRow)
             })
           }
         })
@@ -211,18 +236,11 @@ class App extends React.Component {
     feedbackRow.sort()
     this.trueFeedback.push(this.feedbackRow)
 
-    console.log('feedback', feedbackRow)
-    console.log('remainingSolution', remainingSolution)
-    console.log('currentRow', currentRow)
-    console.log('solutionRow', solutionRow)
-
     this.setState(prevState => ({
       feedbackRow: {
         ...prevState.feedbackRow,
 
       }
-    }, () => {
-      console.log('feedbackSTATE', feedbackRow)
     }))
 
     for (let i = 0; i < feedbackRow.length; i++) {
@@ -249,14 +267,34 @@ class App extends React.Component {
     })
   }
 
+  revealHint(event) {
+    let hintNumber = event.target.getAttribute('name')
+    this.setState({
+      hint: this.colors[this.solutionRow.slice(1, 2)],
+      hint2: this.colors[this.solutionRow.slice(2, 3)],
+    })
+
+    if (hintNumber === 'one') {
+      this.setState(prevState => ({
+        hintRevealed: { one: true, two: prevState.hintRevealed.two }
+      }))
+    } else {
+      this.setState(prevState => ({
+        hintRevealed: { one: prevState.hintRevealed.one, two: true }
+      }))
+    }
+  }
+
   render() {
     return (
-      <div className='App'>
+      <div className='App' >
         <div className='title'>
           <h1 className='logo'>Master</h1>
           <h1 className='logo2'>mind</h1>
         </div>
-        <Rules currentDiff={this.state.currentDiff} getSolution={this.getSolution}
+        <DarkToggle />
+        <Rules
+          currentDiff={this.state.currentDiff} getSolution={this.getSolution}
           solutionRow={this.state.solutionRow}
           currentRow={this.state.currentRow}
           feedbackRow={this.state.feedbackRow}
@@ -272,48 +310,54 @@ class App extends React.Component {
           gameWon={this.state.gameWon}
         />
 
-        <Input colors={this.colors}
+        <Input
+          currentDiff={this.state.currentDiff}
+          colors={this.colors}
           currentColor={this.state.color}
           handleColorClick={this.handleColorClick} />
 
-        <div className='board'>
-          <Board
-            test={this.state.feedbackRow}
-            feedbackRow={this.state.feedbackRow}
-            data={this.state.pegs}
-            checkWinCondition={this.checkWinCondition}
-            newGame={this.state.newGame}
-            isChecked={this.state.isChecked}
-            color={this.state.color}
-            updateColor={this.updateColor}
-            one={this.state.one}
-            two={this.state.two}
-            three={this.state.three}
-            four={this.state.four}
-            colorNum={this.state.colorNum}
-            updateRowCount={this.updateRowCount}
-            remainingGuesses={this.state.totalRows}
-            gameOver={this.state.gameOver}
-            won={this.state.won}
-            lost={this.state.lost}
-            restartGame={this.restartGame}
-            resetState={this.resetState}
-            gameWon={this.state.gameWon}
-            addForm={this.state.addForm}
-          />
-          {this.state.gameOver ?
-            <div className='solution'>
-              <div>Solution</div>
-              {this.state.solutionRow.map((solution, i) => (
-                <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
-              ))}
-            </div>
-            : null}
-          {this.state.solutionRow.map((solution, i) => (
-            <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
-          ))}
-        </div>
-      </div>
+        <Board
+          test={this.state.feedbackRow}
+          feedbackRow={this.state.feedbackRow}
+          data={this.state.pegs}
+          checkWinCondition={this.checkWinCondition}
+          newGame={this.state.newGame}
+          isChecked={this.state.isChecked}
+          color={this.state.color}
+          updateColor={this.updateColor}
+          one={this.state.one}
+          two={this.state.two}
+          three={this.state.three}
+          four={this.state.four}
+          colorNum={this.state.colorNum}
+          updateRowCount={this.updateRowCount}
+          remainingGuesses={this.state.totalRows}
+          gameOver={this.state.gameOver}
+          won={this.state.won}
+          lost={this.state.lost}
+          restartGame={this.restartGame}
+          resetState={this.resetState}
+          gameWon={this.state.gameWon}
+          addForm={this.state.addForm}
+          revealHint={this.revealHint}
+          hint={this.state.hint}
+          hint2={this.state.hint2}
+          hintRevealed={this.state.hintRevealed}
+        />
+        {this.state.gameOver ?
+          <div className='solution'>
+            <div>Solution</div>
+            {this.state.solutionRow.map((solution, i) => (
+              <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
+            ))}
+          </div>
+          : null}
+        {this.state.solutionRow.map((solution, i) => (
+          <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
+        ))}
+        {/* <Drag /> */}
+      </div >
+
     )
   }
 };

@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
   font-size: calc(10px + 2vmin);
@@ -6,8 +7,47 @@
   margin-right: 5%;
   font-style: Sans-Serif;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f3f2ef;
+  /* background-color: #f3f2ef; */
+  background-color: var(--primaryBackgroundColor)
+}
 
+html.light {
+  --primaryBackgroundColor: #f3f2efb2;
+  --primaryTextColor: #1666C5;
+  --headerColor: #1666C5;
+  --secondaryBackgroundColor: #f3f2efb2;
+}
+
+html.dark {
+  --primaryTextColor: white;
+  --primaryBackgroundColor: black;
+  --headingTextColor: white;
+  --secondaryBackgroundColor: black;
+  --headerColor: rgba(255, 217, 0, 0.808);
+}
+
+
+@media (prefers-color-scheme: light) {
+  html {
+    --primaryBackgroundColor: #f3f2efb2;
+    --primaryTextColor: #1666C5;
+    --headerColor: #1666C5;
+  }
+}
+
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --primaryTextColor: white;
+    --primaryBackgroundColor: black;
+    --headingTextColor: white;
+    --secondaryBackgroundColor: black;
+    --headerColor: rgba(255, 217, 0, 0.808);
+  }
+}
+
+body {
+  background: var(--secondaryBackgroundColor);
 }
 
 input {
@@ -20,17 +60,17 @@ input {
   color: #787a80;
 }
 
-h2, h3 {
-  color: #0a66c2;
+h1, .solution {
+  color: var(--headerColor);
 }
 
 input:focus {
   outline: none;
 }
 
-.restartGame {
+.restartGame{
   font-weight: bold;
-  color: #0a66c2;
+  color: var(--headerColor);
 }
 
 .title {
@@ -42,7 +82,7 @@ input:focus {
 
 .logo {
   font-style: Sans-Serif;
-  color: #1666C5;
+  color: var(--headerColor);
   font-weight: bold;
 }
 
@@ -50,12 +90,12 @@ input:focus {
   font-style: Sans-Serif;
   color: white;
   font-weight: bold;
-  background-color: #1666C5;
+  background-color: var(--headerColor);
   border-radius: 10%;
 }
 
 button {
-  background-color: #1666C5;
+  background-color: var(--headerColor);
   width: 15rem;
   height: 3rem;
   border: none;
@@ -65,28 +105,6 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 2rem;
-  cursor: pointer;
-}
-
-button:focus {
-  outline: none;
-}
-
-ul {
-  list-style: none;
-  text-align: left;
-  padding: 15px;
-  background: #171a1f;
-  border-radius: 5px;
-}
-
-li {
-  padding: 15px;
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  background: #282c34;
-  border-radius: 5px;
-  overflow-wrap: break-word;
   cursor: pointer;
 }
 

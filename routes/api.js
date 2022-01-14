@@ -76,4 +76,22 @@ router.get('/randomUniqueNum', (req, res, next) => {
     })
 })
 
+router.get('/unfairNum', (req, res, next) => {
+  axios.get('http://www.random.org/integers/', { params: {num: 4, min: 0, max: 14, rnd: 'new', base: 10, col: 1, format: 'plain'}})
+    .then(function (response) {
+      if (response.data) {
+        Game.create({ solution: response.data.slice(0, 7) })
+          .then((data) => res.json(data))
+          .catch(next);
+      } else {
+        res.json({
+          error: 'Missing random numbers'
+        })
+      }
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+})
+
 module.exports = router;

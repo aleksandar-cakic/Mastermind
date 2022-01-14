@@ -2,7 +2,7 @@ import React from 'react';
 import StyledButton from './Buttons/StyledButton.jsx';
 import styled from 'styled-components'
 import Timer from './timer.jsx'
-import '../stylesheets/rules.css'
+import '../stylesheets/Board.css'
 
 class Rules extends React.Component {
   constructor(props) {
@@ -44,35 +44,47 @@ class Rules extends React.Component {
   }
 
   render() {
-    const rulesButton = this.state.showRules ? 'Show Rules' : 'Hide Rules';
-    const currentDifficulty = this.props.currentDiff === 'Easy' ? <div>Timer at 90 sec with duplicate pegs</div>
-      : this.props.currentDiff === 'Normal' ? <div>Timer at 60 sec with unique pegs</div>
-        : this.props.currentDiff === 'Hard' ? <div>Timer at 30 sec with unique pegs</div>
-          : this.props.currentDiff === 'Unfair' ? <div>Don't think, just play.</div>
+    const rulesButton = this.state.showRules
+      ? 'Show Rules'
+      : 'Hide Rules';
+    const currentDifficulty = this.props.currentDiff === 'Easy'
+      ? <div className='difficulty-details'>Unlimited time with duplicate pegs</div>
+      : this.props.currentDiff === 'Normal'
+        ? <div className='difficulty-details'>Timer at 60 sec with unique pegs</div>
+        : this.props.currentDiff === 'Hard'
+          ? <div className='difficulty-details'>Timer at 30 sec with unique pegs</div>
+          : this.props.currentDiff === 'Unfair'
+            ? <div className='difficulty-details'>Timer at 35 sec with duplicate pegs and double the colors</div>
             : ''
 
     return (
       <div className='rules'>
-        {this.props.newGame ? null :
-          <div>
+        {this.props.newGame
+          ? null
+          : <div>
             <StyledButton onClick={this.props.startNewGame}>Start Game</StyledButton>
             <StyledButton onClick={this.showRules}>{rulesButton}</StyledButton>
-            {!this.state.showRules ? this.state.ruleInfo.map((rule, i) => (
-              <h5 key={i}>{rule}</h5>)) : ''}
+            {!this.state.showRules
+              ? this.state.ruleInfo.map((rule, i) => (
+                <h5 key={i}>{rule}</h5>))
+              : ''}
             <div className='difficulty'>
               {this.state.difficulty.map((item, i) => (
-                <div className={item === this.props.currentDiff ? 'currentDifficulty' : ''} onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
+                <div className={item === this.props.currentDiff
+                  ? 'currentDifficulty'
+                  : ''} onClick={this.props.updateDifficulty} key={i} id={item}>{item}</div>
               ))}
             </div>
           </div>
         }
-        {!this.props.newGame ? currentDifficulty : null}
-        {this.props.newGame ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} currentDiff={this.props.currentDiff} gameOver={this.props.gameOver} /> : <div className='timer'></div>}
-
-{/* {this.props.gameOver ? this.props.gameWon ? <div className='score'>YOU WON!!!</div> : <div className='score'>YOU LOST :((</div> : null} */}
-
+        {!this.props.newGame
+          ? currentDifficulty
+          : null}
+        {this.props.newGame
+          ? <Timer lost={this.props.lost} updateScore={this.props.updateScore} currentDiff={this.props.currentDiff} gameOver={this.props.gameOver} />
+          : <div className='timer'></div>}
         <br></br>
-        <div>Win: {this.props.won} Lost: {this.props.lost}</div>
+        <div className='score'>Win: {this.props.won} Lost: {this.props.lost}</div>
       </div>
     )
   }
