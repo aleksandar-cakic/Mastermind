@@ -6,6 +6,7 @@ import DarkToggle from './components/darkToggle.jsx'
 import axios from 'axios';
 import './stylesheets/Board.css';
 import './stylesheets/input.css';
+import styled from 'styled-components';
 
 class App extends React.Component {
   constructor(props) {
@@ -28,7 +29,6 @@ class App extends React.Component {
     this.solutionRow = [];
     this.colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'brown', 'salmon', 'lime', 'gold', 'pink', 'black', 'grey', 'magenta'
     ];
-
     this.currentRow = ['1', '2', '2', '4'];
     this.feedbackRow = []
     this.trueFeedback = []
@@ -62,7 +62,6 @@ class App extends React.Component {
       hintRevealed: { one: false, two: false },
     }
   }
-
 
   playAgainSetup() {
     this.setState({
@@ -344,18 +343,17 @@ class App extends React.Component {
           hint2={this.state.hint2}
           hintRevealed={this.state.hintRevealed}
         />
-        {this.state.gameOver ?
-          <div className='solution'>
-            <div>Solution</div>
-            {this.state.solutionRow.map((solution, i) => (
-              <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
-            ))}
-          </div>
-          : null}
-        {this.state.solutionRow.map((solution, i) => (
-          <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
-        ))}
-        {/* <Drag /> */}
+
+        {
+          this.state.gameOver ?
+            <div className='solution'>
+              <div>Solution</div>
+              {this.state.solutionRow.map((solution, i) => (
+                <div key={i} className={`circle ${solution}`} id={this.colors[solution]}></div>
+              ))}
+            </div>
+            : null
+        }
       </div >
 
     )
