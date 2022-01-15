@@ -32,11 +32,9 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
       two: addFormData.two,
       three: addFormData.three,
       four: addFormData.four,
-      feedback: feedback.length > 4 ? feedback.slice(-4) : feedback,
+      feedback: feedback.length > 4 ? feedback.slice(-4) : feedback
     };
-    console.log('newPeg', newPeg)
 
-    console.log('feedbackBOARD', feedback)
     const newPegs = [...pegs, newPeg];
     setPegs(newPegs);
 
@@ -52,7 +50,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
 
     const currentPegs = Object.values(newPegs[newPegs.length - 1])
     updateRowCount()
-    checkWinCondition(currentPegs, newPegs, newFeedback)
+    checkWinCondition(currentPegs, newPegs)
     resetState()
     event.target.reset()
   }
@@ -60,7 +58,7 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
   const resetBoard = (event) => {
     restartGame()
     setPegs(data)
-    setFeedback(feedbackRow)
+    setFeedback([])
     setAddFormData({
       one: '',
       two: '',
@@ -115,62 +113,61 @@ const Board = ({ test, data, checkWinCondition, feedbackRow, newGame, isChecked,
         : <div className='remainingGuesses'>{`${remainingGuesses} guesses remaining`}</div>}
       <br></br>
 
-      {newGame ?
-        <div className='input-list'>
-          <form className='inputRow' onSubmit={handleAddFormSubmit}>
-            <input
-              className='circle'
-              type='radio'
-              name='one'
-              required='required'
-              placeholder='one'
-              value={one.num}
-              onClick={handleAddFormChange}
-              id={one.color}
-              style={{ backgroundColor: one.color }}
-            />
-            <input
-              className='circle'
-              type='radio'
-              name='two'
-              required='required'
-              placeholder='two'
-              value={two.num}
-              onClick={handleAddFormChange}
-              id={two.color}
-              style={{ backgroundColor: two.color }}
-            />
-            <input
-              className='circle'
-              type='radio'
-              name='three'
-              required='required'
-              placeholder='three'
-              value={three.num}
-              onClick={handleAddFormChange}
-              id={three.color}
-              style={{ backgroundColor: three.color }}
-            />
-            <input
-              className='circle'
-              type='radio'
-              name='four'
-              required='required'
-              placeholder='four'
-              value={four.num}
-              onClick={handleAddFormChange}
-              id={four.color}
-              style={{ backgroundColor: four.color }}
-            />
-            {gameOver ? null :
-              <button className='rowCheck' type='submit' value='submit' id='submit'>Check</button>
+      {
+              newGame ?
+                <form className='inputRow' onSubmit={handleAddFormSubmit}>
+                  <input className='circle'
+                    type='radio'
+                    name='one'
+                    required='required'
+                    placeholder='one'
+                    value={one.num}
+                    onClick={handleAddFormChange}
+                    id={one.color}
+                    style={{ backgroundColor: one.color }}
+                  />
+                  <input
+                    className='circle'
+                    type='radio'
+                    name='two'
+                    required='required'
+                    placeholder='two'
+                    value={two.num}
+                    onClick={handleAddFormChange}
+                    id={two.color}
+                    style={{ backgroundColor: two.color }}
+                  />
+                  <input
+                    className='circle'
+                    type='radio'
+                    name='three'
+                    required='required'
+                    placeholder='three'
+                    value={three.num}
+                    onClick={handleAddFormChange}
+                    id={three.color}
+                    style={{ backgroundColor: three.color }}
+                  />
+                  <input
+                    className='circle'
+                    type='radio'
+                    name='four'
+                    required='required'
+                    placeholder='four'
+                    value={four.num}
+                    onClick={handleAddFormChange}
+                    id={four.color}
+                    style={{ backgroundColor: four.color }}
+                  />
+                  {gameOver ? null :
+                    <button className='rowCheck' type='submit' value='submit' id='submit'>Check</button>
+                  }
+                </form>
+                : ''
             }
-          </form>
-        </div>
-        : ''
-      }
-    </div>
+          </div >
   )
 }
+
 
 export default Board;

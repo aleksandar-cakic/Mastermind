@@ -6,14 +6,15 @@ const Timer = ({ updateScore, currentDiff, gameOver }) => {
   let [timer, setTimer] = React.useState(time)
 
   React.useEffect(() => {
-    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000)
+    const countdown = setTimeout(() => setTimer(timer - 1), 1000)
+    timer > 0 && countdown
 
     if (timer === 0) {
       return updateScore('lost')
     }
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(countdown);
     }
   }, [timer]);
 

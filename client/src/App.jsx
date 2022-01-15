@@ -120,7 +120,7 @@ class App extends React.Component {
   }
 
   startNewGame() {
-    console.log(this.state.currentDiff)
+    console.log('Difficulty: ', this.state.currentDiff)
     this.setState({
       newGame: this.state.newGame ? false : true,
       gameOver: false
@@ -176,8 +176,6 @@ class App extends React.Component {
 
             _this.setState({
               solutionRow: _this.solutionRow
-            }, () => {
-              console.log(_this.solutionRow)
             })
           }
         })
@@ -192,8 +190,6 @@ class App extends React.Component {
             _this.solutionRow = data.split('')
             _this.setState({
               solutionRow: _this.solutionRow
-            }, () => {
-              console.log(_this.solutionRow)
             })
           }
         })
@@ -203,7 +199,7 @@ class App extends React.Component {
     }
   }
 
-  checkWinCondition(newPegs, allPegs, newFeedback) {
+  checkWinCondition(newPegs, allPegs) {
     let currentRow = newPegs.slice(0, 4);
     let feedbackRow = newPegs[4];
     let { solutionRow } = this;
